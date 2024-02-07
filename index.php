@@ -138,7 +138,6 @@ function count_sql()
                       <td>" . $description . "</td>
                       <td>" . $order_date . "</td>
                       <td>" . $deadline . "</td>
-                      <td>" . $id . "</td>
                       <td>
                         <button type='submit' name='edit-btn' value='edit-btn' class='btn btn-outline-success ms-1 edit-click' data-id=" . $id . ">Edit</button>
                         <button type='submit' class='btn btn-outline-danger delete-click' data-id=" . $id . ">Delete</button>
