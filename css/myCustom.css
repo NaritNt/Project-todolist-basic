@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    margin: 50px;
+}
+
+#list1 .form-control {
+    border-color: transparent;
+}
+
+#list1 .form-control:focus {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+#list1 .select-input.form-control[readonly]:not([disabled]) {
+    background-color: #fbfbfb;
+}
+
+.debugCode{
+    border: 1px solid red;
+}
+
+.t-center{
+    text-align: center;
+}
+
+.c-container{
+    display: flex;
+    justify-content: space-between;
+}
+
