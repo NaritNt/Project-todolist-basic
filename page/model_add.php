@@ -6,8 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-                <form action="db/check.php" method="post" class="text-center">
+                <form action="./db/check.php" method="post" class="text-center">
                     <div class="row">
                         <div class="col-12">
                             <input type="text" class="form-control" placeholder="รายการ" aria-label="First name" name="description" value>
@@ -29,8 +28,8 @@
                         </div>
                     </div>
                     <br>
-                    <button type="button" class="btn btn-secondary back-page" data-bs-dismiss="modal">Close</button>
-                    <button type="sumit" class="btn btn-primary" name="action" value="addData">Save</button>
+                    <input type="text" value="<?= $_SESSION['user_id'] ?>" name="user" hidden>
+                    <button type="sumit" class="btn btn-primary" name="insert" value="addData">Save</button>
                 </form>
             </div>
 

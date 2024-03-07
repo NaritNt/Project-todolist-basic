@@ -1,56 +1,44 @@
 <?php
 
-// INSERT Data to Databasee
-isset($_POST["action"]) ? $action_post = $_POST["action"] : $action_post = "";
-// insert Data to DataBase
-if ($action_post == "addData") {
-    require "conn.php";
-    $descript = $_POST["description"];
-    $orderDate = $_POST["order_date"];
-    $deadline = $_POST["deadline"];
-
-    $sql = "INSERT INTO list (description, order_date, deadline)
-            VALUES ('$descript', '$orderDate', '$deadline')";
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>location.href='../index.php';</script>";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-    $conn->close();
-    
-} // UPDATE Data from Database
-else if ($action_post == "edit_Data") {
-    require "conn.php";
-    $descript = $_POST["description"];
-    $orderDate = $_POST["order_date"];
-    $deadline = $_POST["deadline"];
-    $id = $_POST["id"];
-    $sql = "UPDATE list SET 
-    description ='$descript',
-    order_date='$orderDate',
-    deadline= '$deadline' 
-    WHERE id =$id";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>location.href='../index.php';</script>";
-    } else {
-        echo "Error updating record: " . $conn->error;
-    }
-
-    $conn->close();
+include "./conn.php";
+if (isset($_POST['insert'])) {
+    $description = $_POST['description'];
+    $order_date = $_POST['order_date'];
+    $deadline = $_POST['deadline'];
+    $user_id = $_POST['user'];
+    $sql = "INSERT INTO list (description, order_date, deadline, user_id) VAlUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(1, $description);
+    $stmt->bindParam(2, $order_date);
+    $stmt->bindParam(3, $deadline);
+    $stmt->bindParam(4, $user_id);
+    $stmt->execute();
+    header("location: ../index.php");
 }
 
-// DELETE Data from Database
-isset($_GET["action_get"]) ? $bt_delete = $_GET["action_get"] : $bt_delete = "";
-isset($_GET["delete_id"]) ? $delete_id = $_GET["delete_id"] : $delete_id = "";
-if ($bt_delete == "delete") {
-    require "conn.php";
-    $sql = "DELETE FROM list WHERE id= $delete_id";
+if (isset($_POST['update'])) {
+    $description = $_POST['description'];
+    $order_date = $_POST['order_date'];
+    $deadline = $_POST['deadline'];
+    $user_id = $_POST['user'];
 
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>location.href='../index.php';</script>";
-    } else {
-        echo "Error deleting record: " . $conn->error;
-    }
-    $conn->close();
+    $sql = "UPDATE list SET description = ?, order_date=?, deadline=? WHERE list_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(1, $description);
+    $stmt->bindParam(2, $order_date);
+    $stmt->bindParam(3, $deadline);
+    $stmt->bindParam(4, $user_id);
+    $stmt->execute();
+    header("location: ../index.php");
+}
+
+
+if (isset($_POST['delete'])) {
+    $user_id = $_POST['user'];
+
+    $sql = "DELETE FROM list WHERE list_id =?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(1, $user_id);
+    $stmt->execute();
+    header("location: ../index.php");
 }
